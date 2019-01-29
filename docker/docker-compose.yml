@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  webapp:
+    build:
+      context: ./webapp
+      args:
+        servername: 127.0.0.1:80
+    container_name: webapp
+    ports:
+      - "8080:80"
+    tty: true
+    volumes:
+      - "..:/tmp/repo"

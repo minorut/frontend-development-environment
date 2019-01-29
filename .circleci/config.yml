@@ -1,0 +1,126 @@
+version: 2
+jobs:
+  setup:
+    docker:
+      - image: circleci/node:8.11.3
+    steps:
+      - checkout
+      - restore_cache:
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - save_cache:
+          key: yarn-packages-{{ .Branch }}-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./*
+  inspect:
+    docker:
+      - image: circleci/node:8.11.3
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Lint
+          command: yarn lint
+  test:
+    docker:
+      - image: circleci/node:8.11.3
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Test
+          command: yarn test
+  build:
+    docker:
+      - image: circleci/node:8.11.3
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Build
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]
+            then
+              mode=:prod
+            fi
+            yarn build${mode}
+      - run:
+          name: Save Revision to File
+          command: echo {{ .Revision }} > revision
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .circleci
+            - public
+            - revision
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - attach_workspace:
+          at: .
+      - add_ssh_keys:
+          fingerprints:
+            - "SO:ME:FIN:G:ER:PR:IN:T"
+      - run:
+          name: ssh-keyscan
+          command: ssh-keyscan -p ${SSH_PORT} ${SSH_HOST} >> ~/.ssh/known_hosts
+      - run:
+          name: Deploy Over SSH
+          command: |
+            rsync -e "ssh -p ${SSH_PORT}" -acv --delete --exclude=".circleci/config.yml" \
+                .circleci public revision ${SSH_USER}@${SSH_HOST}:/tmp/repo
+            ssh ${SSH_USER}@${SSH_HOST} "sh /tmp/repo/.circleci/deploy.sh"
+
+workflows:
+  version: 2
+  setup-inspect-test-build-and-deploy:
+    jobs:
+      - setup:
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+      - inspect:
+          requires:
+            - setup
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+      - test:
+          requires:
+            - setup
+            - inspect
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+      - build:
+          requires:
+            - setup
+            - test
+          filters:
+            branches:
+              only:
+                - master
+                - develop
+      - deploy:
+          requires:
+            - setup
+            - test
+            - build
+          filters:
+            branches:
+              only:
+                - master
+                - develop
