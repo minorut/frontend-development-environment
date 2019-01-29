@@ -26,7 +26,7 @@ $ yarn --version
 1.13.0
 ```
 
-## Docker
+## Docker / Docker compose
 ```bash
 # On local machine
 $ cd ./docker
