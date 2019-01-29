@@ -62,10 +62,10 @@ $ yarn install --frozen-lockfile
 # On Docker container
 $ cd /tmp/repo
 
-# Build files for development
+# Build files for development environment
 $ yarn build
 
-# Watch files for development
+# Watch files for development environment
 $ yarn watch
 
 # Build files for production environment
