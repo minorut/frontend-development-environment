@@ -62,14 +62,29 @@ $ yarn install --frozen-lockfile
 # On Docker container
 $ cd /tmp/repo
 
-# Build files for development environment
+# Inspect, test and build files for development environment
 $ yarn build
 
-# Watch files for development environment
+# `yanr build` with watch option
 $ yarn watch
 
+# Build files for development environment
+$ yarn build:dev
+
+# `yanr build:dev` with watch option
+$ yarn build:dev:w
+
 # Build files for production environment
-$ yarn builds:prod
+$ yarn build:prod
+
+# Inspect (lint)
+$ yarn lint
+
+# Test
+$ yarn test
+
+# Remove `public` directory
+$ yarn clean
 ```
 
 ## CI with CircleCI
