@@ -68,7 +68,7 @@ $ yarn build
 # Watch files for development
 $ yarn watch
 
-# Build files for development
+# Build files for production environment
 $ yarn builds:prod
 ```
 
