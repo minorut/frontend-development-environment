@@ -43,11 +43,11 @@ $ docker-compose rm [-f]
 # Stop and remove containers
 $ docker-compose down
 
-$ List containers
+# List containers
 $ docker-compose ps
 
-$ Execute an interactive shell on the container (webapp is container name)
-# docker container exec -it webapp sh
+# Execute an interactive shell on the container (webapp is container name)
+$ docker container exec -it webapp sh
 ```
 
 ## Setup (Install npm dependencies)
@@ -94,6 +94,6 @@ $ git push origin master
 $ git push origin develop
 
 # CI doesn't run when commit with a message containing "[ci skip]" or "[skip ci]"
-$ git commit -am "Fixed bugs [ci skip]"
+$ git commit -am "Add comments [ci skip]"
 $ git push origin master
 ```
