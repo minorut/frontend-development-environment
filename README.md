@@ -97,3 +97,22 @@ $ git push origin develop
 $ git commit -am "Add comments [ci skip]"
 $ git push origin master
 ```
+
+## CircleCI's Screenshots
+#### Workflow
+<img width="1356" alt="circleci-workflow" src="https://user-images.githubusercontent.com/493046/52521424-6023aa00-2cba-11e9-9627-1ff8282e8d1b.png">
+
+#### Setup
+<img width="1357" alt="circleci-setup" src="https://user-images.githubusercontent.com/493046/52521496-4b93e180-2cbb-11e9-905d-76060dd18cfd.png">
+
+#### Inspect
+<img width="1355" alt="circleci-inspect" src="https://user-images.githubusercontent.com/493046/52521498-5189c280-2cbb-11e9-9d10-c64c654b23fe.png">
+
+#### Test
+<img width="1354" alt="circleci-test" src="https://user-images.githubusercontent.com/493046/52521501-58b0d080-2cbb-11e9-972d-485a4ff18ddb.png">
+
+#### Build
+<img width="1352" alt="circleci-build" src="https://user-images.githubusercontent.com/493046/52521503-5cdcee00-2cbb-11e9-84b7-569187d00b0e.png">
+
+#### Deploy
+<img width="1355" alt="circleci-deploy" src="https://user-images.githubusercontent.com/493046/52521504-5fd7de80-2cbb-11e9-8ad5-66543dd86381.png">
